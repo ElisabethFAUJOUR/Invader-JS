@@ -63,24 +63,22 @@ body {
     border: none;
     margin-left: 2px;
     cursor: pointer;
-
 }
 
 .grid-size {
     height:50px;
     border-radius: 8px 0px 0px 8px;
-    
-
+    border:none;
+    margin-right: 2px;
 }
 
-/*
-#cellSize {
 
+.cell-size {
     height:50px;
-
+    border:none;
 }
 
 
 
-    */
+
 
