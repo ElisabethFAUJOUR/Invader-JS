@@ -7,6 +7,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position:relative;
 }
 
 /*FORMULAIRE*/
@@ -43,6 +44,7 @@ body {
 .color {
     background-color: #4845a3;
     width:200px;
+    height: 50px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
