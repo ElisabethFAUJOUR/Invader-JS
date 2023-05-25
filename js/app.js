@@ -1,6 +1,5 @@
-//ETAPE 1 
+//ETAPE 1 FONCTON GENERER UNE GRILLE 
 
-/*Fonction pour créer une grille avec une taille size et un nombre de Px*/
 function createGrid(gridSize, cellSize) {
   
   /*Selection de la div id=invader*/
@@ -11,28 +10,25 @@ function createGrid(gridSize, cellSize) {
   invaderDiv.style.gridTemplateColumns = `repeat(${gridSize}, ${cellSize}px)`;
   invaderDiv.style.gridTemplateRows = `repeat(${gridSize}, ${cellSize}px)`;
 
-  invaderDiv.innerHTML = ''; // Supprimer le contenu précédent de la div
+  /*Supprimer le contenu précédent de la div*/
+  invaderDiv.innerHTML = '';
 
   /*Boucle pour générer la grille*/
-  for (let i = 0; i < gridSize * gridSize; i++) {
-    /*Boucle pour générer les cells en pixels*/
+  for (let i = 0; i < gridSize * gridSize; i++) { 
     const cellDiv = document.createElement('div'); /*Création de la div pour créer un pixel*/
     cellDiv.classList.add('cell'); /*Ajouter une classe 'cell' sur cette div*/
     cellDiv.style.backgroundColor = 'rgb(210, 218, 226)'; /*Background gris/*/
     cellDiv.style.width = `${cellSize}px`; /*Largeur de la cell*/
     cellDiv.style.height = `${cellSize}px`; /*Hauteur de la cell*/
     invaderDiv.appendChild(cellDiv); /*Ajouter de la div class='cell' dans la div id='invader'*/
-
+    cellDiv.addEventListener('click', changeCellColor);/*Ajouter de l'evenement clic*/
   }
 }
 
 createGrid(8, 25);
 
 
-
-
-
-//ETAPE 3 = configuration du Formulaire 
+//ETAPE 3 CONFIG DU FORMULAIRE
 
 /*Selectionner le formulaire*/
 const configForm = document.querySelector('.configuration'); /*Selectionner la div form*/
@@ -67,14 +63,8 @@ button.addEventListener('click', function (event) {
   createGrid(gridValue,cellValue);
 });
 
+//ETAPE 2 FONCTION CHANGER LA COULEUR LORS DU CLIC
 
-
-
-
-
-//ETAPE 2 = changer la couleur du pixel lors d'un clic 
-
-/*Fonction pour changer de couleur le background en noir si le background est gris*/
 function changeCellColor(event) {
   const backgroundColor = event.target.style.backgroundColor;
   if (backgroundColor === 'rgb(210, 218, 226)') {
@@ -82,12 +72,4 @@ function changeCellColor(event) {
   } else {
     event.target.style.backgroundColor = 'rgb(210, 218, 226)';
   }
-}
-
-/*Selection de toutes les div cell*/
-const cells = document.querySelectorAll('.cell');
-
-/*Boucle pour ajouter un evenement lors du clic souris chaque cell (sur chaque pixel)*/
-for (const cell of cells) {
-  cell.addEventListener('click', changeCellColor);
 }
