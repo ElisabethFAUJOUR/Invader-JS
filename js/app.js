@@ -17,10 +17,10 @@ for (let i = 0; i < 64; i++) { /*Boucle pour générer les 64 pixels*/
 /*Fonction pour changer de couleur le background en noir si le background est gris*/
 function changeCellColor(event) {
   const backgroundColor = event.target.style.backgroundColor;
-  if (backgroundColor === "#d2dae2") {
+  if (backgroundColor != "rgb(210, 218, 226)") {
     event.target.style.backgroundColor = "black";
   } else {
-    event.target.style.backgroundColor = "#d2dae2";
+    event.target.style.backgroundColor = "rgb(210, 218, 226)";
   }
 }
 
@@ -30,10 +30,15 @@ const cells = document.querySelectorAll('.cell');
 /*Boucle pour ajouter un evenement lors du clic souris chaque cell (sur chaque pixel)*/
 for (const cell of cells) {
   cell.addEventListener('click', changeCellColor);
-  console.log(cell);
 }
 
 
+// /*Boucle pour ajouter un evenement lors du clic souris chaque cell (sur chaque pixel)*/
+// for (const cell of cells) {
+//   cell.addEventListener('click', function changeCellColor() {
+//     cell.style.backgroundColor = "black";
+//   });
+// }
 
 
 
