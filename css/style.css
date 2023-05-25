@@ -26,10 +26,7 @@ body {
 
 #invader {
     margin:auto;
-    display: grid;
-    grid-template-columns: repeat(8, 25px);
-    grid-template-rows: repeat(8, 25px);
-  }
+}
  
 .cell {
     width: 25px;
@@ -71,7 +68,6 @@ body {
     border:none;
     margin-right: 2px;
 }
-
 
 .cell-size {
     height:50px;
