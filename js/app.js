@@ -1,4 +1,5 @@
 //ETAPE 1 
+
 /*Fonction pour créer une grille avec une taille size et un nombre de Px*/
 function createGrid(gridSize, cellSize) {
   
@@ -9,6 +10,8 @@ function createGrid(gridSize, cellSize) {
   invaderDiv.style.display = 'grid';
   invaderDiv.style.gridTemplateColumns = `repeat(${gridSize}, ${cellSize}px)`;
   invaderDiv.style.gridTemplateRows = `repeat(${gridSize}, ${cellSize}px)`;
+
+  invaderDiv.innerHTML = ''; // Supprimer le contenu précédent de la div
 
   /*Boucle pour générer la grille*/
   for (let i = 0; i < gridSize * gridSize; i++) {
@@ -55,8 +58,10 @@ button.textContent = 'Valider';
 configForm.appendChild(gridSizeInput); 
 configForm.appendChild(cellSizeInput); 
 configForm.appendChild(button);
+
 /*Evenement quand on submit le formulaire => générer une nouvelle grille en prenant en compte la valeur saisie dans l'input*/
-button.addEventListener('click', function () {
+button.addEventListener('click', function (event) {
+  event.preventDefault();
   const gridValue = parseInt(document.querySelector('.grid-size').value);
   const cellValue = parseInt(document.querySelector('.cell-size').value);
   createGrid(gridValue,cellValue);
