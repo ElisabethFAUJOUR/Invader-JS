@@ -1,6 +1,5 @@
 /*BODY*/
 
-
 body {
     width: 100vw;
     height: 100vh;
@@ -55,4 +54,33 @@ body {
     right: 0;
 }
 
+.submit-form {
+    color: #FFF;
+    height:50px;
+    background-color: #9B68E4;
+    padding: 4px 16px;
+    border-radius: 0px 8px 8px 0px;
+    border: none;
+    margin-left: 2px;
+    cursor: pointer;
+
+}
+
+.grid-size {
+    height:50px;
+    border-radius: 8px 0px 0px 8px;
+    
+
+}
+
+/*
+#cellSize {
+
+    height:50px;
+
+}
+
+
+
+    */
 
