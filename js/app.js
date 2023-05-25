@@ -8,6 +8,7 @@ const invaderDiv = document.getElementById('invader');
 for (let i = 0; i < 64; i++) { /*Boucle pour générer les 64 pixels*/
   const cellDiv = document.createElement('div'); /*Création de la div pour créer un pixel*/
   cellDiv.classList.add('cell'); /*Ajouter une classe "cell" sur cette div*/
+  cellDiv.style.backgroundColor = 'rgb(210, 218, 226)'; /*Ajouter un background gris/ 
   invaderDiv.appendChild(cellDiv); /*Ajouter de la div class="cell" dans la div id="invader"*/
 }
 
@@ -17,7 +18,7 @@ for (let i = 0; i < 64; i++) { /*Boucle pour générer les 64 pixels*/
 /*Fonction pour changer de couleur le background en noir si le background est gris*/
 function changeCellColor(event) {
   const backgroundColor = event.target.style.backgroundColor;
-  if (backgroundColor != "rgb(210, 218, 226)") {
+  if (backgroundColor === "rgb(210, 218, 226)") {
     event.target.style.backgroundColor = "black";
   } else {
     event.target.style.backgroundColor = "rgb(210, 218, 226)";
@@ -32,13 +33,6 @@ for (const cell of cells) {
   cell.addEventListener('click', changeCellColor);
 }
 
-
-// /*Boucle pour ajouter un evenement lors du clic souris chaque cell (sur chaque pixel)*/
-// for (const cell of cells) {
-//   cell.addEventListener('click', function changeCellColor() {
-//     cell.style.backgroundColor = "black";
-//   });
-// }
 
 
 
