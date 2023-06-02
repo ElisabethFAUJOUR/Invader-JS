@@ -10,20 +10,26 @@ const app = {
     'highlight',
   ],
 
-  /*----FONCTON EVENEMENT ClICK COULEUR----*/
+  /**
+   * Event click color 
+   */
   handleCellClick: function (event) {
     event.target.className = `cell ${app.currentColor}`;
   },
 
 
-  /*----FONCTON CREER UNE GRILLE----*/
+  /** 
+  * Create a grid of pixel
+  * @param {number} gridSize - grid size px 
+  * @param {number} cellSiez - cell size px  
+  * */
   createGrid: function (gridSize, cellSize) {
-    //Modifier la taille de la grille
+    //Modify grid size and grid cell
     app.invaderDiv.style.gridTemplateColumns = `repeat(${gridSize}, ${cellSize}px)`;
     app.invaderDiv.style.gridTemplateRows = `repeat(${gridSize}, ${cellSize}px)`;
-    //Supprimer le contenu précédent de la div
+    //Delete div content
     app.invaderDiv.innerHTML = '';
-    //Boucle pour générer la grille
+    //Generate the grid
     for (let i = 0; i < gridSize * gridSize; i++) {
       const cellDiv = document.createElement('div'); //Création de la div pour créer un pixel
       cellDiv.classList.add('cell', 'empty'); //Ajouter une classe 'cell' sur cette div
@@ -34,14 +40,13 @@ const app = {
     }
   },
 
-  /*----FONCTON INIT----*/
   init: function () {
-    // Récupération de la div invader après chargement du DOM
     app.invaderDiv = document.getElementById('invader');
-    // Création de la grille après avoir récupéré invaderDiv
     app.createGrid(8, 25);
 
-    /*----PALETTE DE COULEUR----*/
+    /**
+    * Color palette
+    */
     const paletteDiv = document.querySelector('.palette');
     for(const colorString of app.styles){
       const colorCircle = document.createElement('div');
@@ -52,22 +57,22 @@ const app = {
       paletteDiv.appendChild(colorCircle);
     }
     
-    /*----CONFIG DU FORMULAIRE----*/
-    //Selectionner le formulaire
+    /**
+    * Form configuration
+    */
     const formConfig = document.querySelector('.configuration');
 
-    //Créer 2 input et 1 bouton* et ajouter leurs attributs types/id/name* avec la méthode setAttribute
-    /****INPUT gridSize****/
+    //INPUT gridSize
     const gridSizeInput = document.createElement('input');
 
-    gridSizeInput.type ="number";
-    gridSizeInput.name ="gridSize";
-    gridSizeInput.id ="gridSize";
-    gridSizeInput.placeholder ="Taille de la grille";
+    gridSizeInput.type ='number';
+    gridSizeInput.name ='gridSize';
+    gridSizeInput.id ='gridSize';
+    gridSizeInput.placeholder ='Taille de la grille';
 
     formConfig.appendChild(gridSizeInput);
 
-    /****INPUT cellSize****/
+    //INPUT cellSize
     const cellSizeInput = document.createElement('input');
 
     cellSizeInput.type ='number';
@@ -77,7 +82,7 @@ const app = {
 
     formConfig.appendChild(cellSizeInput);
 
-    /****BUTTON****/
+    //BUTTON
     const button = document.createElement('button');
 
     button.type = 'submit';
@@ -86,7 +91,7 @@ const app = {
 
     formConfig.appendChild(button);
 
-    //Evenement quand on submit le formulaire => générer une nouvelle grille en prenant en compte la valeur saisie dans l'input
+    //Listener event submit => generate a new grid with the input value
     button.addEventListener('click', function (event) {
       event.preventDefault();
       const gridValue = parseInt(document.getElementById('gridSize').value);
