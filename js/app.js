@@ -1,7 +1,7 @@
 const app = {
   invaderDiv: null,
 
-  currentColor:'empty',
+  currentColor: 'empty',
 
   styles: [
     'plain',
@@ -10,20 +10,20 @@ const app = {
     'highlight',
   ],
 
-  /**
-   * Event click color 
-   */
-  handleCellClick: function (event) {
-    event.target.className = `cell ${app.currentColor}`;
+  init() {
+    app.invaderDiv = document.getElementById('invader');
+    app.createGrid(8, 25);
+    app.createColorPalette();
+    app.createFormConfig();
+    app.handleButtonlick();
   },
 
-
   /** 
-  * Create a grid of pixel
-  * @param {number} gridSize - grid size px 
-  * @param {number} cellSiez - cell size px  
-  * */
-  createGrid: function (gridSize, cellSize) {
+   * Create a grid of pixel
+   * @param {number} gridSize - grid size px 
+   * @param {number} cellSiez - cell size px  
+   * */
+  createGrid(gridSize, cellSize) {
     //Modify grid size and grid cell
     app.invaderDiv.style.gridTemplateColumns = `repeat(${gridSize}, ${cellSize}px)`;
     app.invaderDiv.style.gridTemplateRows = `repeat(${gridSize}, ${cellSize}px)`;
@@ -40,59 +40,63 @@ const app = {
     }
   },
 
-  init: function () {
-    app.invaderDiv = document.getElementById('invader');
-    app.createGrid(8, 25);
-
-    /**
-    * Color palette
-    */
+  /**
+   * Color palette
+   */
+  createColorPalette() {
     const paletteDiv = document.querySelector('.palette');
-    for(const colorString of app.styles){
+    for (const colorString of app.styles) {
       const colorCircle = document.createElement('div');
       colorCircle.classList.add('palette-color', colorString);
-      colorCircle.addEventListener('click', ()=>{
+      colorCircle.addEventListener('click', () => {
         app.currentColor = colorString;
       });
       paletteDiv.appendChild(colorCircle);
     }
-    
-    /**
-    * Form configuration
-    */
-    const formConfig = document.querySelector('.configuration');
+  },
 
+  /**
+   * Form configuration
+   */
+  createFormConfig() {
+    const formConfig = document.querySelector('.configuration');
     //INPUT gridSize
     const gridSizeInput = document.createElement('input');
-
-    gridSizeInput.type ='number';
-    gridSizeInput.name ='gridSize';
-    gridSizeInput.id ='gridSize';
-    gridSizeInput.placeholder ='Taille de la grille';
-
+    gridSizeInput.type = 'number';
+    gridSizeInput.name = 'gridSize';
+    gridSizeInput.id = 'gridSize';
+    gridSizeInput.placeholder = 'Taille de la grille';
     formConfig.appendChild(gridSizeInput);
 
     //INPUT cellSize
     const cellSizeInput = document.createElement('input');
-
-    cellSizeInput.type ='number';
-    cellSizeInput.name ='cellSize';
-    cellSizeInput.id ='cellSize';
-    cellSizeInput.placeholder ='Taille d\'une cellule';
-
+    cellSizeInput.type = 'number';
+    cellSizeInput.name = 'cellSize';
+    cellSizeInput.id = 'cellSize';
+    cellSizeInput.placeholder = 'Taille d\'une cellule';
     formConfig.appendChild(cellSizeInput);
 
     //BUTTON
     const button = document.createElement('button');
-
     button.type = 'submit';
     button.id = 'submitForm';
     button.textContent = 'Valider';
-
     formConfig.appendChild(button);
+  },
 
-    //Listener event submit => generate a new grid with the input value
-    button.addEventListener('click', function (event) {
+  /**
+   * Event click color 
+   */
+  handleCellClick: function (event) {
+    event.target.className = `cell ${app.currentColor}`;
+  },
+
+  /**
+   * Event click button generate a new grid 
+   */
+  handleButtonlick: function () {
+    const button = document.getElementById('submitForm');
+    button.addEventListener('click', (event) => {
       event.preventDefault();
       const gridValue = parseInt(document.getElementById('gridSize').value);
       const cellValue = parseInt(document.getElementById('cellSize').value);
