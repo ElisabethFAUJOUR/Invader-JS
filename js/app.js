@@ -1,22 +1,29 @@
 const app = {
-  invaderDiv: null,
+  
+  defaultGridSize: 8,
+  defaultCellSize: 30,
 
-  currentColor: 'empty',
-
-  styles: [
-    'plain',
-    'empty',
-    'light',
-    'highlight',
+  colors: [
+    "red", 
+    "blue", 
+    "orange", 
+    "green", 
+    "grey",
+    "white"
   ],
 
+  currentColor: "red",
+
+  // ----- init -----
+
   init() {
-    app.invaderDiv = document.getElementById('invader');
-    app.createGrid(8, 25);
+    app.createGrid(app.defaultGridSize, app.defaultCellSize);
     app.createColorPalette();
     app.createFormConfig();
-    app.handleButtonlick();
+    app.listenToFormSubmit();
   },
+
+  // ----- functions -----
 
   /** 
    * Create a grid of pixel
@@ -24,34 +31,44 @@ const app = {
    * @param {number} cellSiez - cell size px  
    * */
   createGrid(gridSize, cellSize) {
+    const invaderElem = document.querySelector("#invader");
+    //Delete the previous grid
+    invaderElem.innerHTML = "";
     //Modify grid size and grid cell
-    app.invaderDiv.style.gridTemplateColumns = `repeat(${gridSize}, ${cellSize}px)`;
-    app.invaderDiv.style.gridTemplateRows = `repeat(${gridSize}, ${cellSize}px)`;
-    //Delete div content
-    app.invaderDiv.innerHTML = '';
+    invaderElem.style.gridTemplateColumns = `repeat(${gridSize}, ${cellSize}px)`;
+    invaderElem.style.gridTemplateRows = `repeat(${gridSize}, ${cellSize}px)`;
     //Generate the grid
     for (let i = 0; i < gridSize * gridSize; i++) {
-      const cellDiv = document.createElement('div'); //Création de la div pour créer un pixel
-      cellDiv.classList.add('cell', 'empty'); //Ajouter une classe 'cell' sur cette div
-      cellDiv.style.width = `${cellSize}px`; //Largeur de la cell
-      cellDiv.style.height = `${cellSize}px`; //Hauteur de la cell
-      cellDiv.addEventListener('click', app.handleCellClick);
-      app.invaderDiv.appendChild(cellDiv); //Ajouter de la div class='cell' dans la div id='invader'
+      const cellElem = document.createElement("div");
+      cellElem.classList.add("cell"); 
+      cellElem.style.width = `${cellSize}px`; 
+      cellElem.style.height = `${cellSize}px`; 
+      invaderElem.appendChild(cellElem); 
     }
+    app.listenToCellClick();
   },
 
   /**
    * Color palette
    */
   createColorPalette() {
-    const paletteDiv = document.querySelector('.palette');
-    for (const colorString of app.styles) {
-      const colorCircle = document.createElement('div');
-      colorCircle.classList.add('palette-color', colorString);
-      colorCircle.addEventListener('click', () => {
-        app.currentColor = colorString;
+    const paletteElem = document.querySelector(".color-palette");
+    
+    for (const color of app.colors) {
+      const colorElem = document.createElement("div");
+      colorElem.classList.add("color-picker", color);
+
+      if (color === app.currentColor) { 
+        colorElem.classList.add("selected");
+      }
+
+      colorElem.addEventListener("click", () => {
+        app.currentColor = color;
+        document.querySelector(".selected").classList.remove("selected");
+        colorElem.classList.add("selected");
       });
-      paletteDiv.appendChild(colorCircle);
+
+      paletteElem.appendChild(colorElem);
     }
   },
 
@@ -59,50 +76,62 @@ const app = {
    * Form configuration
    */
   createFormConfig() {
-    const formConfig = document.querySelector('.configuration');
+    const formConfig = document.querySelector(".configuration");
     //INPUT gridSize
-    const gridSizeInput = document.createElement('input');
-    gridSizeInput.type = 'number';
-    gridSizeInput.name = 'gridSize';
-    gridSizeInput.id = 'gridSize';
-    gridSizeInput.placeholder = 'Taille de la grille';
+    const gridSizeInput = document.createElement("input");
+    gridSizeInput.type = "number";
+    gridSizeInput.name = "gridSize";
+    gridSizeInput.id = "gridSize";
+    gridSizeInput.placeholder = "Taille de la grille";
     formConfig.appendChild(gridSizeInput);
 
     //INPUT cellSize
-    const cellSizeInput = document.createElement('input');
-    cellSizeInput.type = 'number';
-    cellSizeInput.name = 'cellSize';
-    cellSizeInput.id = 'cellSize';
-    cellSizeInput.placeholder = 'Taille d\'une cellule';
+    const cellSizeInput = document.createElement("input");
+    cellSizeInput.type = "number";
+    cellSizeInput.name = "cellSize";
+    cellSizeInput.id = "cellSize";
+    cellSizeInput.placeholder = "Taille d'une cellule";
     formConfig.appendChild(cellSizeInput);
 
     //BUTTON
-    const button = document.createElement('button');
-    button.type = 'submit';
-    button.id = 'submitForm';
-    button.textContent = 'Valider';
+    const button = document.createElement("button");
+    button.type = "submit";
+    button.id = "button";
+    button.textContent = "Valider";
     formConfig.appendChild(button);
   },
 
+  // ----- listener events -----
+
   /**
-   * Event click color 
+   * Cell click listener
    */
-  handleCellClick: function (event) {
-    event.target.className = `cell ${app.currentColor}`;
+  listenToCellClick() {
+    const cellElements = document.querySelectorAll(".cell"); 
+    for (const cellElement of cellElements) { 
+      cellElement.addEventListener("click", () => { 
+        if (cellElement.classList.contains(app.currentColor)) {
+          cellElement.classList.remove(app.currentColor);
+        } else {
+          cellElement.className = `cell ${app.currentColor}`;
+        }
+      });
+    }
   },
 
   /**
-   * Event click button generate a new grid 
+   * Form submit listener to generate a new grid 
    */
-  handleButtonlick: function () {
-    const button = document.getElementById('submitForm');
-    button.addEventListener('click', (event) => {
+  listenToFormSubmit: function () {
+    const formElem = document.querySelector(".configuration");
+    formElem.addEventListener("submit", (event) => {
       event.preventDefault();
-      const gridValue = parseInt(document.getElementById('gridSize').value);
-      const cellValue = parseInt(document.getElementById('cellSize').value);
+      const gridValue = parseInt(document.querySelector("#gridSize").value);
+      const cellValue = parseInt(document.querySelector("#cellSize").value);
       app.createGrid(gridValue, cellValue);
     });
   }
 };
 
-window.addEventListener('DOMContentLoaded', app.init);
+// ----- Launch init when DOM is ready -----
+window.addEventListener("DOMContentLoaded", app.init);
