@@ -11,7 +11,7 @@ Welcome to **JS Invader**, a JavaScript application for creating a pixel art dra
 ![Invader](./docs/Capture.PNG)
 
 ## How to use ?
-Follow these steps to set up and use the Oquiz application:
+Follow these steps to set up and use the application:
 1. Clone the repo
 2. Open the index.html file in your browser.
 3. Start creating pixel art in the style of Space Invaders!
